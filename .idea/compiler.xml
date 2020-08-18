@@ -7,8 +7,8 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="consumer" />
-        <module name="sunyardCloud" />
         <module name="provider" />
+        <module name="commoms" />
         <module name="eureka" />
       </profile>
     </annotationProcessing>
