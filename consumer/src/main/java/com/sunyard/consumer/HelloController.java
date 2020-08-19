@@ -1,6 +1,7 @@
 package com.sunyard.consumer;
 
 
+import com.sunyard.bean.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.client.ServiceInstance;
@@ -8,6 +9,7 @@ import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
@@ -84,6 +86,54 @@ public class HelloController {
         System.out.println(s3);
 
     }
+
+   /* post请求*/
+    @GetMapping("/hello5")
+    public void hello5(){
+        LinkedMultiValueMap<Object, Object> multiValueMap = new LinkedMultiValueMap<>();
+        multiValueMap.add("username","javaboy");
+        multiValueMap.add("age",18);
+        User user = restTemplate.postForObject("http://provider/addUser1", multiValueMap, User.class);
+        System.out.println(user);
+        user.setUsername("javagirl");
+        User user1 = restTemplate.postForObject("http://provider/addUser2", user, User.class);
+        System.out.println(user1);
+    }
+
+    /*重定向*/
+    @GetMapping("/hello6")
+    public void hello6(){
+        LinkedMultiValueMap<Object, Object> multiValueMap = new LinkedMultiValueMap<>();
+        multiValueMap.add("username","javaboy");
+        multiValueMap.add("age",18);
+        URI uri = restTemplate.postForLocation("http://provider/register", multiValueMap);
+        String s = restTemplate.getForObject(uri, String.class);
+        System.out.println(s);
+    }
+
+    //put请求
+    @GetMapping("/hello7")
+    public void hello7(){
+        LinkedMultiValueMap<Object, Object> multiValueMap = new LinkedMultiValueMap<>();
+        multiValueMap.add("username","javaboy");
+        multiValueMap.add("age",18);
+        restTemplate.put("http://provider/updateUser",multiValueMap);
+        User user = new User();
+        user.setUsername("xuhuadong");
+        user.setAge(28);
+        restTemplate.put("http://provider/updateUser1",user);
+
+    }
+
+    @GetMapping("hello8")
+    public void hello8(){
+        restTemplate.delete("http://provider/deleteUser?id={1}",18);
+        restTemplate.delete("http://provider/deleteUser1/{1}",19);
+    }
+
+
+
+
 
 
 

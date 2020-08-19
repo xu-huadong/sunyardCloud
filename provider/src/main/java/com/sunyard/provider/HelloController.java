@@ -2,10 +2,8 @@ package com.sunyard.provider;
 
 import com.sunyard.bean.User;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class HelloController {
@@ -30,5 +28,28 @@ public class HelloController {
     public User addUser2(@RequestBody User user){
         return user;
     }
+
+    @PutMapping("/updateUser")
+    public void  updateUser(User user){
+        System.out.println(user);
+    }
+
+    @PutMapping("/updateUser1")
+    public void updateUser1(@RequestBody User user){
+        System.out.println(user);
+    }
+
+    @DeleteMapping("/deleteUser")
+    public void deleteUser(Integer id){
+        System.out.println("id:"+id);
+    }
+
+    @DeleteMapping("/deleteUser1/{id}")
+    public void deleteUser1(@PathVariable Integer id){
+        System.out.println("id:"+id);
+    }
+
+
+
 
 }
